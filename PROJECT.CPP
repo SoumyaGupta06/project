@@ -6,7 +6,86 @@
 #include<process.h>
 #define NUM 10
 
-float calc(int n1, int n2, int optn)
+
+void print(int i,int j,int k, int l)       //printing output questions
+{
+	cout<<"#include<iostream.h>\n";
+	cout<<"main()\n{\n\tint i="<<i<<",j="<<j<<",k="<<k<<",l="<<l<<";\n";
+	cout<<"\twhile(i<10)\n\t{\n\t\twhile(k<10)\n\t\t{\n\t\t\tcout<<i+k;\n\t\t\tk=k+l;\n\t\t}\n";
+	cout<<"\t\ti=i+j;\n\t\tcout<<endl;\n\t}\n}";
+}
+
+void input()                            //taking input for output question
+{
+	fstream inp;
+	inp.open("input.txt",ios::out);
+	char ch='.';
+	while(ch!='#')
+	{
+		ch=getche();
+		if((int)ch==13)
+		{
+			inp<<'\n';
+			cout<<"\n";
+		}
+		inp<<ch;
+	}
+	inp.close();
+}
+
+int check()                             //checking the users input
+{
+	fstream inp,opt;
+	inp.open("input.txt",ios::in);
+	opt.open("print.txt",ios::in);
+	char str1[20],str2[20];
+	int f=1;
+	inp.getline(str1,20,'\n');
+	while(strcmp(str1,"#")!=0)
+	{
+		opt.getline(str2,20,'\n');
+		if(strcmp(str1,str2)!=0)
+		{
+			f=0;
+			break;
+		}
+		inp.getline(str1,20,'\n');
+	}
+	inp.close();
+	opt.close();
+	return f;
+}
+
+void calcOutput()         //calculating the answer for output question n calling to print question
+{
+	fstream opt;
+	opt.open("print.txt",ios::out);
+	int i,j,k,l,x;
+	i=random(5);
+	j=random(3)+2;
+	x=random(5);
+	l=random(3)+2;
+	print(i,j,x,l);
+	while(i<10)
+	{
+		k=x;
+		while(k<10)
+		{
+			opt<<i+k;
+			k+=l;
+		}
+		i+=j;
+		opt<<"\n";
+	}
+	opt.close();
+	input();
+	x=check();
+	cout<<x;
+
+}
+
+
+float calc(int n1, int n2, int optn)            //calculating simple operations
 {
 	fstream qs;
 	float x;
@@ -31,7 +110,7 @@ float calc(int n1, int n2, int optn)
 	return x;
 }
 
-void ques()
+void ques()                    //generating random questions for simple operations
 {
 	int i,n1,n2,optn;
 	float ans;
@@ -48,7 +127,7 @@ void ques()
 	}
 	sol.close();
 }
-void inputAns()
+void inputAns()               //taking responses from user
 {
 	fstream qs,inp;
 	int i,val;
@@ -67,7 +146,7 @@ void inputAns()
 	inp.close();
 }
 
-void compare()
+void compare()                  //checking for correctness
 {
 	fstream result,sol,inp;
 	result.open("result.txt",ios::out);
@@ -90,7 +169,7 @@ void compare()
 	result.close();
 }
 
-void display()
+/*void display()                      //displaying the final result
 {
 	fstream result;
 	result.open("result.txt",ios::in);
@@ -105,7 +184,7 @@ void display()
 	per=count*10;
 	cout<<"Percentage scored : "<<per<<"%\n";
 	result.close();
-}
+} */
 
 
 void main()
@@ -114,6 +193,7 @@ void main()
 	ques();
 	inputAns();
 	compare();
-	display();
+	calcOutput();
+//	display();
 	getch();
 }

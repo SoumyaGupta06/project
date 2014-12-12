@@ -53,9 +53,8 @@ int check()
 	return f;
 }
 
-void main()
+void calcOutput()
 {
-	clrscr();
 	fstream opt;
 	opt.open("print.txt",ios::out);
 	int i,j,k,l,x;
@@ -79,5 +78,12 @@ void main()
 	input();
 	x=check();
 	cout<<x;
+
+}
+
+void main()
+{
+	clrscr();
+	calcOutput();
 	getch();
 }
